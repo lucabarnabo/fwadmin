@@ -1,0 +1,39 @@
+.container {
+    background-color: var(--bgSoft);
+    padding: 10px;
+    border-radius: 10px;
+    width: 90%;
+    height: 90%;
+    position: relative;
+    display: flexbox;
+}
+
+.buttonLocation {
+    float: right;
+}
+
+.title {
+    padding: 20px;
+    gap: 20px;
+}
+
+.button {
+
+    padding: 3px 10px;
+    border-radius: 5px;
+    color: var(--text);
+    border: none;
+    cursor: pointer;
+    background-color: crimson;
+}
+
+.overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    opacity: 100%;
+    width: 70%;
+    height: 70%;
+    background-color: var(--bgSoft);
+}
