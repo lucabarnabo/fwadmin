@@ -1,11 +1,11 @@
-"use client"
 import { useEffect } from "react";
 import styles from "../modal/modal.module.css"
 
 const Modal = ({
     isOpen,
     onClose,
-    children
+    children, 
+    title
 }) => {
     useEffect(() => {
         const handleKeyDown = (event) => {
@@ -24,15 +24,17 @@ const Modal = ({
     if (!isOpen) { return null }
     
         return (
-            <div className={styles.overlay} onClick={handleOverlayClick}>
-                <div className={styles.container}>
-                    <div className={styles.buttonLocation}>
+            <div className={styles.overlay} >
+                <div className={styles.overlayBackground} onClick={handleOverlayClick}>
+                <div className={styles.overlayContainer}>
+                        <div className={styles.overlayControls}>
+                    <label className={styles.title} >{ title }</label>
                     <button className={styles.button} onClick={onClose}>X</button>
                     </div>
-                   
                     {children}
                 </div>
-            </div>
+                </div>
+                </div>
         )
     
 }

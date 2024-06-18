@@ -1,24 +1,16 @@
-.container {
-    background-color: var(--bgSoft);
+.overlayControls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 10px;
-    border-radius: 10px;
-    width: 90%;
-    height: 90%;
-    position: relative;
-    display: flexbox;
-}
-
-.buttonLocation {
-    float: right;
 }
 
 .title {
-    padding: 20px;
-    gap: 20px;
+    padding: 5px;
+    font-size: x-large;
 }
 
 .button {
-
     padding: 3px 10px;
     border-radius: 5px;
     color: var(--text);
@@ -27,13 +19,23 @@
     background-color: crimson;
 }
 
-.overlay {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.overlayBackground {
     position: fixed;
-    opacity: 100%;
-    width: 70%;
-    height: 70%;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 9;
+}
+
+.overlayContainer {
     background-color: var(--bgSoft);
+    padding: 5px;
+    margin: 10% 30%;
+    border-radius: 10px;
+    width: fit-content;
+    height: fit-content;
+    position: fixed;
+    z-index: 10;
 }

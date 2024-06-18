@@ -1,9 +1,11 @@
 .container {
     background-color: var(--bgSoft);
-    padding: 20px;
     border-radius: 10px;
-    margin-top: 20px;
+    padding: 10px;
+    margin: 15px;
     overflow: auto;
+    width: 600px;
+    height: 400px;
 }
 
 .form {
@@ -21,6 +23,10 @@
     border-radius: 5px;
     margin-bottom: 30px;
     border: 2px solid #2e374a;
+}
+
+.form select>option {
+    background-color: var(--bgSoft);
 }
 
 .form input,

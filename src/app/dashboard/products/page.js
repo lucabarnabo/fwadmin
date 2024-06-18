@@ -20,7 +20,7 @@ export default function product() {
     return (
         <div className={styles.container}>
 
-            {isModalOpen === true && (<Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+            {isModalOpen === true && (<Modal isOpen={isModalOpen} title={"Agregar Item"} onClose={handleCloseModal}>
                 <AddProducts/>
             </Modal>)
             }
