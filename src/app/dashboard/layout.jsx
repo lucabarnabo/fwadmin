@@ -11,6 +11,7 @@ const Layout = ({ children, modal }) => {
             <div className={styles.content}>
                 <Navbar />
                 {children}
+                
             </div>
         </div>
     )

@@ -5,11 +5,23 @@ import axios from "axios";
 const AddProducts = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [result, setResult] = useState(null);
 
- useEffect(() => {
+  //Metodo que serializa los datos del form y los envia a la api
+  const formAction = async (formData) => {
+    const data = Object.fromEntries(formData.entries())
+    await axios.post(`http://localhost:3000/category`, data)
+      .then(function (res) {
+      console.log(res.status);
+      })
+      .catch(function (err) {
+      console.log(err)
+    })
+}
+
+  useEffect(() => {
   const getCategories = async () => {
-    axios.get(`http://localhost:3000/category`)
+   await axios.get(`http://localhost:3000/category`)
       .then(function (res) {
     setCategories(res.data)
   })
@@ -23,7 +35,7 @@ const AddProducts = () => {
   
     return (
       <div className={styles.container}>
-        <form action="" className={styles.form}>
+        <form action={formAction} className={styles.form}>
         <input type="text" placeholder="Titulo" name="title" required/>
          <select name="category" placeholder="Categoria" id="category">
     {categories.map(categorie => (

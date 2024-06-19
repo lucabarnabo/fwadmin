@@ -25,7 +25,7 @@
     border: 2px solid #2e374a;
 }
 
-.form select>option {
+.option {
     background-color: var(--bgSoft);
 }
 

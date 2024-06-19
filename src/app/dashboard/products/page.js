@@ -6,9 +6,8 @@ import Pagination from '@/app/ui/dashboard/pagination/pagination'
 import AddProducts from './addProducts/page'
 import { useState } from 'react'
 import Modal from "../../ui/dashboard/modal/modal"
+
 export default function product() {
-
-
     const [isModalOpen, setIsModalOpen] = useState(false)
     const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -17,6 +16,7 @@ export default function product() {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+    
     return (
         <div className={styles.container}>
 
