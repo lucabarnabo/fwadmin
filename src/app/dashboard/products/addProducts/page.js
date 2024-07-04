@@ -6,6 +6,8 @@ import { toast } from 'react-toastify'
 const AddProducts = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [locations, setLocations] = useState([])
+  const [checked, setChecked] = useState(false)
   const [res, setRes] = useState(null);
   
   const notify = () => {
@@ -14,9 +16,11 @@ const AddProducts = () => {
 
   //Metodo que serializa los datos del form y los envia a la api
   const formAction = async (formData) => {
-    const data = Object.fromEntries(formData.entries())
+    let data = Object.fromEntries(formData.entries())
+    data.freight = checked
+    console.log( data);
 
-    const response = await axios.post(`http://localhost:3000/category`, data)
+    const response = await axios.post(`http://localhost:3000/product/insert`, data)
       .then(function (res) {
         setRes({ status: 'success', message: "Insert con exito" })
         return res
@@ -26,18 +30,13 @@ const AddProducts = () => {
         return err
       })
   }
-
+//Use effect escucha res 
   useEffect(() => {
     if (res != null) {
       notify()
       setRes(null)
     }
   }, [res]);
-  //setRidePrice controla el input lugar de actividad y establece el valor 
-  //correspondiente del traslado segun zona donde se realizala actividad
-  const setRidePrice = async () => {
-    
-  }
 
   useEffect(() => {
   const getCategories = async () => {
@@ -47,28 +46,58 @@ const AddProducts = () => {
   })
   .catch(function (err) {
     setError(err)
-    console.log(error);
   })
   }
+   const getLocations = async () => {
+   await axios.get(`http://localhost:3000/location`)
+      .then(function (res) {
+        setLocations(res.data)
+  })
+  .catch(function (err) {
+    setError(err) 
+  })
+  }  
+    getLocations()
    getCategories()
- }, []);
+  }, []);
+  
+  const handleChecked = async () => {
+    checked == true ? setChecked(false) :  setChecked(true)
+  } 
   
     return (
       <div className={styles.container}>
         <form action={formAction} className={styles.form}>
-        <input type="text" placeholder="Titulo" name="title" required/>
+        <input type="text" placeholder="Titulo" name="name" required/>
          <select name="category" placeholder="Categoria" id="category">
-    {categories.map(categorie => (
-      <option key={categorie.id} value={categorie.id}>
-        {categorie.cat}
+    {categories.map(category => (
+      <option key={category.id} value={category.id}>
+        {category.cat}
       </option>
     ))}
   </select>
-     
+     {/* Cambiar inputs por select y fetchear datos de location y shift */}
           <input type="number"  placeholder="Precio" name="price" required />
-          <input type="text" placeholder="Proveedor" name="provider" required />
-          <input type="text" onChange={setRidePrice} placeholder="Lugar de actividad" name="ride" required />
-          <input type="text" placeholder="Monto Traslado" name="ridePrice" required />
+          <input type="text" placeholder="Proveedor" name="supplier" required />
+          <select name="location" placeholder="Lugar de Actividad" id="location">
+    {locations.map(location => (
+      <option key={location.id} value={location.id}>
+        {location.name}
+      </option>
+    ))}
+  </select>
+          <select name="shift" placeholder="Lugar de Actividad" id="shift">
+          <option key="1" value="1">Día</option>
+          <option key="2" value="2">Noche</option>
+          </select>
+            <div>          
+          <input className={styles.checkBox}
+              type="checkbox"
+              checked={checked}
+              onChange={handleChecked}
+            />
+         Necesita Transporte?
+            </div>
           <textarea type="text" placeholder="Descripción" name="desc" id="desc" rows={4} required />
           <button type="submit">Guardar</button>
         </form>
