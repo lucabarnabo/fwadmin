@@ -1,5 +1,5 @@
 import styles from "../../../ui/dashboard/product/addProducts/addProducts.module.css"
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from "axios";
 import { toast } from 'react-toastify'
 
@@ -9,7 +9,7 @@ const AddProducts = () => {
   const [locations, setLocations] = useState([])
   const [checked, setChecked] = useState(false)
   const [res, setRes] = useState(null);
-  
+   const formRef = useRef(null);
   const notify = () => {
     res.status === 'success' ? toast.success(res.message) : toast.error(res.message)
   }
@@ -18,11 +18,10 @@ const AddProducts = () => {
   const formAction = async (formData) => {
     let data = Object.fromEntries(formData.entries())
     data.freight = checked
-    console.log( data);
-
     const response = await axios.post(`http://localhost:3000/product/insert`, data)
       .then(function (res) {
         setRes({ status: 'success', message: "Insert con exito" })
+        formRef.current.reset();
         return res
       })
       .catch(function (err) {
@@ -67,7 +66,7 @@ const AddProducts = () => {
   
     return (
       <div className={styles.container}>
-        <form action={formAction} className={styles.form}>
+        <form ref={formRef} action={formAction} className={styles.form}>
         <input type="text" placeholder="Titulo" name="name" required/>
          <select name="category" placeholder="Categoria" id="category">
     {categories.map(category => (
@@ -98,7 +97,7 @@ const AddProducts = () => {
             />
          Necesita Transporte?
             </div>
-          <textarea type="text" placeholder="Descripción" name="desc" id="desc" rows={4} required />
+          <textarea type="text" placeholder="Descripción" name="info" id="info" rows={4} required />
           <button type="submit">Guardar</button>
         </form>
         </div> 

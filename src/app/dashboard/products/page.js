@@ -4,18 +4,32 @@ import Search from '@/app/ui/dashboard/search/search'
 import Link from 'next/link'
 import Pagination from '@/app/ui/dashboard/pagination/pagination'
 import AddProducts from './addProducts/page'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Modal from "../../ui/dashboard/modal/modal"
+import axios from 'axios'
 
 export default function product() {
+    const [products, setProducts] = useState([])
     const [isModalOpen, setIsModalOpen] = useState(false)
     const handleOpenModal = () => {
     setIsModalOpen(true);
   };
-
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+    
+   useEffect(() => {
+    const getProducts = async () => {
+   await axios.get(`http://localhost:3000/product`)
+      .then(function (res) {
+          setProducts(res.data)
+  })
+  .catch(function (err) {
+    setError(err)
+  })
+    }
+       getProducts()
+  }, []);
     
     return (
         <div className={styles.container}>
@@ -24,8 +38,6 @@ export default function product() {
                 <AddProducts/>
             </Modal>)
             }
-
-
             <div className={styles.top}>
                 <Search placeholder="Buscar un item..." />              
                 <button onClick={handleOpenModal} className={styles.addButton}>Agregar</button>
@@ -40,13 +52,15 @@ export default function product() {
                         <td>Status</td>
                     </tr>
                     </thead>
-                    <tbody>
+                <tbody>
+                    {products.map(prod => (
                         <tr>
-                            <td>Sunset Bodega Viamonte</td>
-                            <td>Sunset - Fiesta</td>
-                            <td>$45.0000</td>
-                            <td>Si</td>
-                            <td>Activo</td>
+                            {/* Terminar de llamar a propiedades */}
+                            <td>{prod.name}</td>
+                            <td>{prod.categ}</td>
+                            <td>{prod.name}</td>
+                            <td>{prod.name}</td>
+                            <td>{prod.name}</td>
                             <td>
                                 <div className={styles.buttons}>
 
@@ -56,7 +70,8 @@ export default function product() {
                                 <button className={`${styles.button} ${ styles.delete}`} >Borrar</button>
                                 </div>
                              </td>
-                </tr>
+                        </tr>
+                    ))}
                     </tbody>
                 
             </table>
